@@ -1,0 +1,52 @@
+class Solution {
+    public int numIslands(char[][] grid) {
+        int islandCount = 0;
+
+        // loop x pos of the grid
+        for(int x=0; x<grid.length; x++){
+
+            // loop y pos of the grid
+            for(int y=0; y<grid[x].length; y++){
+                if(grid[x][y] == '1'){
+                    islandCount++;
+
+                    // explore island coverage
+                    exploreIsland(grid, x, y);
+
+                    // // print grid to get better visual understanding
+                    // // array pos with 'x' means that we've explore the pos
+                    // System.out.println("======================");
+                    // for(int i1=0; i1<grid.length; i1++){
+                    //     System.out.println(grid[i1]);
+                    // }
+                }
+            }
+        }
+
+
+        return islandCount;
+    }
+
+    // navigate through the island vertical + horizontally and 
+    // marked visited pos with 'x'
+    public void exploreIsland(char[][] grid, int i, int j){
+
+        // check whether we are going out of boundary
+        if(i<0 || j<0 || i>=grid.length || j>=grid[0].length) return;
+
+        // check if we are reaching sea '0'
+        // or marked position 'x'
+        if(grid[i][j]=='0' || grid[i][j]=='x') return;
+        
+        // mark current pos as 'x', 
+        // meaning that we've been here before
+        grid[i][j]='x';
+
+        exploreIsland(grid,i+1,j);
+        exploreIsland(grid,i,j+1);
+        exploreIsland(grid,i-1,j);
+        exploreIsland(grid,i,j-1);
+        return;
+    }
+
+}

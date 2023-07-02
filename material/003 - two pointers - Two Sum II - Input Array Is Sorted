@@ -1,0 +1,30 @@
+class Solution {
+    public int[] twoSum(int[] numbers, int target) {
+
+        // initiate two pointer
+        int left = 0; // start from the beginning of array
+        int right = numbers.length-1; // start from the end of array
+
+        // unless left and right doesnt meet or 
+        // cross with each other do the following...
+        while(left<right){
+            int curr = numbers[left] + numbers[right];
+            if (curr == target){
+                return new int[]{(left+1), (right+1)};
+            } 
+            
+            // when curr is smaller than target, that means 
+            // we need to push left closer to right
+            else if (curr < target) left++; 
+
+            // when curr is bigger than target, that means 
+            // we need to push right closer to left
+            else if (curr > target) right--;
+        }
+
+        // HINT: the array is ordered, which means array starts(left)
+        // with small number and ends(right) with bigger number.
+
+        return new int[2];
+    }
+}

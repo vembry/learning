@@ -1,0 +1,24 @@
+class Solution {
+    public int removeDuplicates(int[] nums) {
+        // this assume that nums will always contain value(s)
+        // and we will always leave nums[0] alone
+        int counter = 1;
+
+        // counter will  determine the following:
+        // 1. max count with repetitive nums removed
+        // 2. pivot of which from nums that will be pivoted
+
+        for(int i=0; i<nums.length-1;i++){
+
+            // check if next is not equal to current
+            if(nums[i]!=nums[i+1]){
+                // since counter start at 1, we dont have to worry 
+                // about mistakenly replace the nums[counter] with nums[i+1]
+                nums[counter] = nums[i+1];
+                counter++;
+            }
+        }
+
+        return counter;
+    }
+}
