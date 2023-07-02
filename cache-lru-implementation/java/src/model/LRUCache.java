@@ -45,14 +45,14 @@ public class LRUCache {
         this.setNodeOnTop(newNode);
     }
 
-    public void setNodeOnTop(Node node) {
+    private void setNodeOnTop(Node node) {
         node.next = this.head;
         node.prev = this.head.prev;
         node.prev.next = node;
         this.head.prev = node;
     }
 
-    public Node takeOutNode(Node node){
+    private Node takeOutNode(Node node){
         node.next.prev = node.prev;
         node.prev.next = node.next;
         node.next = node.prev = null;
