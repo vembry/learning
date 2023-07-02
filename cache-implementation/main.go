@@ -5,14 +5,6 @@ import (
 	"log"
 )
 
-type CacheProvider interface {
-	// Set is to set cache key-value pair
-	Set(key string, val string)
-
-	// Get is to get cache value by key
-	Get(key string) string
-}
-
 type Node struct {
 	Key  string
 	Val  string
@@ -121,8 +113,7 @@ func (c *LRUCache) Get(key string) string {
 }
 
 func main() {
-	lruCache := NewLRUCache(6)
-	cache := CacheProvider(lruCache)
+	cache := NewLRUCache(6)
 
 	cache.Set("key1", "asd")
 	cache.Set("key2", "asd")
