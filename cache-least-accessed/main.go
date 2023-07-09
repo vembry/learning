@@ -26,7 +26,7 @@ type cacheEngine struct {
 // NewCache is to initiate cache engine
 func NewCache(cap int) *cacheEngine {
 
-	// init head and tail
+	// initiate head and tail
 	head := &node{Key: "head", Value: "head", Count: math.MaxInt}
 	tail := &node{Key: "tail", Value: "tail", Count: math.MinInt}
 	head.Prev = tail
@@ -44,27 +44,38 @@ func NewCache(cap int) *cacheEngine {
 func (c *cacheEngine) Set(key string, val string) {
 	log.Printf("set key='%s' with val='%s'...", key, val)
 
+	// initiate new-node
 	newNode := &node{
 		Key:   key,
 		Value: val,
 		Count: 1,
 	}
 
+	// validate if key exists
 	if val, ok := c.cache[key]; ok {
-		// validate if key exists
-		val.Value = newNode.Value
-		val.Count++
+		// when exists
 
+		val.Value = newNode.Value // edit the value
+		val.Count++               // and increment the count
+
+		// move up the node since it's count is incremented
 		shiftNodeUp(val)
 
+		// replace the new-node with
+		// existing-edited node
 		newNode = val
 	} else {
 		if len(c.cache) == c.cap {
 			// validate capacity threshold
 			log.Printf("reached cap %d", c.cap)
+
+			// takes out least access node
 			temp := takeOutNode(c.tail.Next)
+
+			// remove it from map
 			delete(c.cache, temp.Key)
 		}
+
 		// re-chain the nodes with new node
 		newNode.Next = c.tail.Next
 		newNode.Prev = c.tail
@@ -77,18 +88,23 @@ func (c *cacheEngine) Set(key string, val string) {
 	print(c)
 }
 
-// shiftNodeUp is to shift up nodes
+// shiftNodeUp is to shift up nodes if possible
 func shiftNodeUp(curr *node) {
 	for curr.Next != nil {
+		// validate count
 		if curr.Count > curr.Next.Count {
+			// when curr's count is bigger
+			// than next's count, then swap it
+
 			next := curr.Next
 
-			// fix outer nodes chain of
-			// before-curr node and after-next node
+			// fix outer nodes chain
 			if next.Next != nil {
+				// after-next node
 				next.Next.Prev = curr
 			}
 			if curr.Prev != nil {
+				// before-curr node
 				curr.Prev.Next = next
 			}
 
@@ -120,8 +136,9 @@ func (c *cacheEngine) Get(key string) string {
 
 	// get from cache
 	if val, ok := c.cache[key]; ok {
-		val.Count++
-		shiftNodeUp(val)
+		// when exists,
+		val.Count++      // increment counts
+		shiftNodeUp(val) // move up the node
 		return val.Value
 	}
 
