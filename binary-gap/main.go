@@ -1,6 +1,5 @@
 package main
 
-// you can also use imports, for example:
 import (
 	"fmt"
 )
@@ -9,6 +8,7 @@ func main() {
 	fmt.Printf("val=%d", findLongestBinaryGap(1041))
 }
 
+// this is stolen from https://github.com/firizki/codility-golang/blob/ce63f6b74cfcb362d2be92427f8c1708ce9c44f6/BinaryGap.go
 func findLongestBinaryGap(N int) int {
 	var result int      // Variable to store the length of the longest binary gap found.
 	var result_temp int // Variable to store the length of the current potential binary gap.
